@@ -5,10 +5,20 @@ ModelImporter:
   internalIDToNameTable: []
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 37354fb82de0e2c4f80d43bfb8dae041, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Nightstand
     second: {fileID: 2800000, guid: 528a73a0cdd760240a3befa8983123fa, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: nightstand
+    second: {fileID: 2800000, guid: e2c4d9a59161a854d9ae7220abbbabc2, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -3,7 +3,22 @@ guid: cd7c1edbd258a1f4fad2123094cf510e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Seamless Marble L.R
+    second: {fileID: 2800000, guid: 19cb210c08f2c874ea3bb35cc06187a9, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Wall Texture
+    second: {fileID: 2800000, guid: 3f8c410b2fe25c34792506fa83f31559, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Wall Texture LR
+    second: {fileID: 2800000, guid: 2656dcaa23f02eb4580df8f1a9313a0f, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
