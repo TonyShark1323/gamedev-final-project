@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Lamp : MonoBehaviour
 {
-    public GameObject onText;
-    public GameObject offText;
     public GameObject lightsParent; // Reference to the parent GameObject of the lights
 
     private bool inReach;
@@ -14,8 +12,6 @@ public class Lamp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        onText.SetActive(false);
-        offText.SetActive(false);
         on = false;
         // Ensure the lights start in the correct state (off).
         if (lightsParent != null)
@@ -29,14 +25,7 @@ public class Lamp : MonoBehaviour
         if (other.gameObject.tag == "Reach")
         {
             inReach = true;
-            if (!on)
-            {
-                onText.SetActive(true);
-            }
-            else
-            {
-                offText.SetActive(true);
-            }
+            UIManager.Instance.ShowLightText(!on);
         }
     }
 
@@ -45,12 +34,10 @@ public class Lamp : MonoBehaviour
         if (other.gameObject.tag == "Reach")
         {
             inReach = false;
-            onText.SetActive(false);
-            offText.SetActive(false);
+            UIManager.Instance.HideTexts();
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (inReach && Input.GetKeyDown(KeyCode.E))
@@ -63,9 +50,10 @@ public class Lamp : MonoBehaviour
                 lightsParent.SetActive(on); // Set the parent GameObject's active state.
             }
 
-            onText.SetActive(on && inReach);
-            offText.SetActive(!on && inReach);
-            inReach = false; // Optionally, move this line out if you want the text to update without leaving the trigger
+            if (inReach) // Check if still in reach to update the text correctly
+            {
+                UIManager.Instance.ShowLightText(!on);
+            }
         }
     }
 }

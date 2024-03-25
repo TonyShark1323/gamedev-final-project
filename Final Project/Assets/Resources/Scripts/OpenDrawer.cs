@@ -6,40 +6,34 @@ public class OpenDrawer : MonoBehaviour
 {
     public Animator ANI;
 
-    public GameObject openText;
-    public GameObject closedText;
+    // public GameObject openText;
+    // public GameObject closedText;
 
     // public AudioSource openSound;
     // public AudioSource closeSound;
 
-    private bool open;
+    private bool isOpen;
 
     private bool inReach;
 
 
     void Start()
     {
-        openText.SetActive(false);
-        closedText.SetActive(false);
+        // openText.SetActive(false);
+        // closedText.SetActive(false);
 
         ANI.SetBool("open", false);
         ANI.SetBool("close", false);
 
-        open = false;
+        isOpen = false;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Reach" && !open)
+        if (other.gameObject.tag == "Reach")
         {
             inReach = true;
-            openText.SetActive(true);
-        }
-
-        else if (other.gameObject.tag == "Reach" && open)
-        {
-            inReach = true;
-            closedText.SetActive(true);
+            UIManager.Instance.ShowDrawerText(!isOpen);
         }
     }
 
@@ -48,8 +42,10 @@ public class OpenDrawer : MonoBehaviour
         if (other.gameObject.tag == "Reach")
         {
             inReach = false;
-            openText.SetActive(false);
-            closedText.SetActive(false);
+            UIManager.Instance.HideTexts();
+
+            // openText.SetActive(false);
+            // closedText.SetActive(false);
         }
     }
 
@@ -57,25 +53,40 @@ public class OpenDrawer : MonoBehaviour
 
     void Update()
     {
-        if (!open && inReach && Input.GetKeyDown(KeyCode.E))
+        if (!isOpen && inReach && Input.GetKeyDown(KeyCode.E))
         {
             // openSound.Play();
             ANI.SetBool("open", true);
             ANI.SetBool("close", false);
-            open = true;
-            openText.SetActive(false);
-            inReach = false;
+            isOpen = true;
         }
 
-        else if (open && inReach && Input.GetKeyDown(KeyCode.E))
+        else if (isOpen && inReach && Input.GetKeyDown(KeyCode.E))
         {
             // closeSound.Play();
             ANI.SetBool("open", false);
             ANI.SetBool("close", true);
-            open = false;
-            closedText.SetActive(false);
-            inReach = false;
+            isOpen = false;
         }
-
+        // UpdateText();
+        if (inReach) // Check if still in reach to update the text correctly
+            {
+                UIManager.Instance.ShowDrawerText(!isOpen);
+            }
     }
+
+    // void UpdateText()
+    // {
+    //     // Update the text based on the drawer's state and player's reach
+    //     if (inReach)
+    //     {
+    //         openText.SetActive(!isOpen);
+    //         closedText.SetActive(isOpen);
+    //     }
+    //     else
+    //     {
+    //         openText.SetActive(false);
+    //         closedText.SetActive(false);
+    //     }
+    // }
 }

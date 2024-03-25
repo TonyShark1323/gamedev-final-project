@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -8,16 +6,22 @@ public class Player : MonoBehaviour
     [SerializeField] float mouseSensitivity = 3f;
     [SerializeField] float movementSpeed = 5f;
     [SerializeField] float sprintSpeed = 8f;
+    [SerializeField] float crouchSpeed = 3f;
     [SerializeField] float mass = 1f;
     [SerializeField] float jumpSpeed = 5f;
+    [SerializeField] float normalHeight = 2f;
+    [SerializeField] float crouchHeight = 1f;
 
-    CharacterController controller;
-    Vector3 velocity;
-    Vector2 look;
+    private CharacterController controller;
+    private Vector3 velocity;
+    private Vector2 look;
+    private bool isCrouching = false;
 
-    void Awake() {
+    void Awake() 
+    {
         controller = GetComponent<CharacterController>();
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,59 +29,73 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update() 
+    {
         UpdateGravity();
         UpdateMovement();
         UpdateLook();
     }
 
-    void UpdateGravity() {
+    void UpdateGravity() 
+    {
         var gravity = Physics.gravity * mass * Time.deltaTime;
         velocity.y = controller.isGrounded ? -1f : velocity.y + gravity.y;
     }
 
-    void UpdateMovement() {
+    void UpdateMovement() 
+    {
         var x = Input.GetAxis("Horizontal");
         var y = Input.GetAxis("Vertical");
 
-        var input = new Vector3();
-        input += transform.forward * y;
-        input += transform.right * x;
+        var input = new Vector3(transform.forward.x * y + transform.right.x * x, 0, transform.forward.z * y + transform.right.z * x);
         input = Vector3.ClampMagnitude(input, 1f);
 
         // Check for sprinting
-        float currentSpeed = movementSpeed;
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
+        float currentSpeed = isCrouching ? crouchSpeed : movementSpeed;
+        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && !isCrouching) 
+        {
             currentSpeed = sprintSpeed;
         }
 
-        if (Input.GetButtonDown("Jump") && controller.isGrounded){
+        // Check for crouching
+        if (Input.GetKeyDown(KeyCode.LeftControl)) 
+        {
+            ToggleCrouch();
+        }
+
+        if (Input.GetButtonDown("Jump") && controller.isGrounded && !isCrouching)
+        {
             velocity.y += jumpSpeed;
         }
 
         controller.Move((input * currentSpeed + velocity) * Time.deltaTime);
-
-        // transform.Translate(input * movementSpeed * Time.deltaTime, Space.World);
-        // controller.Move((input * movementSpeed + velocity) * Time.deltaTime); 
     }
 
     void UpdateLook()
     {
         look.x += Input.GetAxis("Mouse X") * mouseSensitivity;
-        look.y += Input.GetAxis("Mouse Y") * mouseSensitivity;
+        look.y -= Input.GetAxis("Mouse Y") * mouseSensitivity;
 
         look.y = Mathf.Clamp(look.y, -89f, 89f);
 
-        cameraTransform.localRotation = Quaternion.Euler(-look.y, 0, 0);
-        transform.localRotation = Quaternion.Euler(0, look.x, 0);
-        // Debug.Log(look);
+        cameraTransform.localEulerAngles = new Vector3(look.y, 0, 0);
+        transform.localEulerAngles = new Vector3(0, look.x, 0);
     }
 
-    public void Teleport(Vector3 position, Quaternion rotation) {
+    void ToggleCrouch() 
+    {
+        isCrouching = !isCrouching;
+        controller.height = isCrouching ? crouchHeight : normalHeight;
+        // Optional: Adjust the center of the CharacterController if needed
+        // controller.center = new Vector3(controller.center.x, isCrouching ? crouchCenterY : normalCenterY, controller.center.z);
+    }
+
+    public void Teleport(Vector3 position, Quaternion rotation) 
+    {
         transform.position = position;
         Physics.SyncTransforms();
         look.x = rotation.eulerAngles.y;
-        look.y = rotation.eulerAngles.z;
+        look.y = -rotation.eulerAngles.x; // Assuming the rotation is provided in Unity's standard format
         velocity = Vector3.zero;
     }
 }

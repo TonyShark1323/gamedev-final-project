@@ -12,7 +12,7 @@ public class ReadNotes : MonoBehaviour
 
     public bool inReach;
 
-    public TextMeshProUGUI pickUpText;
+    public GameObject pickUpText;
 
     public AudioSource pickUpSound;
 
@@ -31,7 +31,9 @@ public class ReadNotes : MonoBehaviour
         noteUI.SetActive(false);
         hud.SetActive(true);
         inv.SetActive(true);
-        pickUpText.gameObject.SetActive(false);
+        // pickUpText.gameObject.SetActive(false);
+        UIManager.Instance.ShowReadNoteText(false); // Use UIManager to hide pickup text
+
         inReach = false;
     }
 
@@ -41,7 +43,7 @@ public class ReadNotes : MonoBehaviour
         if (other.gameObject.tag == "Reach")
         {
             inReach = true;
-            pickUpText.gameObject.SetActive(true);
+            UIManager.Instance.ShowReadNoteText(true);
         }
     }
 
@@ -51,7 +53,7 @@ public class ReadNotes : MonoBehaviour
         if (other.gameObject.tag == "Reach")
         {
             inReach = false;
-            pickUpText.gameObject.SetActive(false);
+            UIManager.Instance.ShowReadNoteText(false);
         }
     }
 

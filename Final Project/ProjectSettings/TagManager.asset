@@ -8,6 +8,7 @@ TagManager:
   - Reach
   - door
   - Unreachable
+  - Drawer
   layers:
   - Default
   - TransparentFX
