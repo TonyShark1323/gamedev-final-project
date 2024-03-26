@@ -1,3 +1,5 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -12,7 +14,8 @@ public class UIManager : MonoBehaviour
     public GameObject lightOnText; // Add this for On text
     public GameObject lightOffText; // Add this for Off text
     public GameObject readNoteText;
-    public GameObject pickupKeyText;
+    public GameObject pickupText;
+    public TextMeshProUGUI messageText; // Assign this via the Inspector
 
     private void Awake()
     {
@@ -59,7 +62,7 @@ public class UIManager : MonoBehaviour
         closeDrawerText.SetActive(false);
         openDoorText.SetActive(false);
         lockedDoorText.SetActive(false);
-        pickupKeyText.SetActive(false);
+        pickupText.SetActive(false);
         closeDoorText.SetActive(false);
         lightOnText.SetActive(false);
         lightOffText.SetActive(false);
@@ -75,11 +78,31 @@ public class UIManager : MonoBehaviour
     }
 
     // Method to show/hide the read note text
-    public void ShowKeyPickupText(bool show)
+    public void ShowPickupText(bool show)
     {
-        if (pickupKeyText != null)
+        if (pickupText != null)
         {
-            pickupKeyText.SetActive(show);
+            pickupText.SetActive(show);
         }
     }
+
+    public void ShowMessage(string message, float duration = 5f)
+    {
+        if (messageText != null)
+        {
+            StopAllCoroutines(); // Stop any previous message coroutines to avoid overlaps
+            StartCoroutine(ShowMessageCoroutine(message, duration));
+        }
+    }
+
+    private IEnumerator ShowMessageCoroutine(string message, float duration)
+    {
+        messageText.text = message; // Set the message text
+        messageText.gameObject.SetActive(true); // Make sure the text is visible
+
+        yield return new WaitForSeconds(duration); // Wait for the duration
+
+        messageText.gameObject.SetActive(false); // Hide the text
+    }
+
 }

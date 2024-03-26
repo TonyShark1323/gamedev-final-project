@@ -10,7 +10,7 @@ public class KeyPickup : MonoBehaviour
         if (other.gameObject.CompareTag("Reach"))
         {
             inReach = true;
-            UIManager.Instance.ShowKeyPickupText(true); // Show appropriate text based on the light's state
+            UIManager.Instance.ShowPickupText(true); // Show appropriate text based on the light's state
         }
     }
 
@@ -20,7 +20,7 @@ public class KeyPickup : MonoBehaviour
         if (other.gameObject.tag == "Reach")
         {
             inReach = false;
-            UIManager.Instance.ShowKeyPickupText(false);
+            UIManager.Instance.ShowPickupText(false);
         }
     }
 
