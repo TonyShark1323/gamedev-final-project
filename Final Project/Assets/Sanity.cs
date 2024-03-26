@@ -8,7 +8,7 @@ public class Sanity : MonoBehaviour
     private float currentSanity; // Current sanity level
     public float sanityDecreaseRate = 20f; // Rate at which sanity decreases per minute
     public TextMeshProUGUI sanityText; // Reference to the TextMeshPro UI element to display sanity
-    private bool sanityActive = false;
+    private bool sanityActive = true;
     public GameObject gameOverPanel; // Assign this in the Inspector
 
 
@@ -18,11 +18,11 @@ public class Sanity : MonoBehaviour
         currentSanity = maxSanity;
 
         // Check if the current scene is not the first scene
-        if (SceneManager.GetActiveScene().buildIndex > 1)
-        {
-            // Debug.Log(SceneManager.GetActiveScene().buildIndex);
-            sanityActive = true;
-        }
+        // if (SceneManager.GetActiveScene().buildIndex > 1)
+        // {
+        //     // Debug.Log(SceneManager.GetActiveScene().buildIndex);
+        //     sanityActive = true;
+        // }
     }
 
     void Update()
