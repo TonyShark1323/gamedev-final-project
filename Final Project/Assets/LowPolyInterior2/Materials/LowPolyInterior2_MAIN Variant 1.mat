@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6027214835081596914
+--- !u!114 &-8518307685502348735
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,36 +20,38 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LowPolyInterior2_WINDOWS Variant
+  m_Name: LowPolyInterior2_MAIN Variant 1
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_Parent: {fileID: 2100000, guid: 53f7e69d5c977b041b1e027b13da74a5, type: 2}
+  m_Parent: {fileID: 2100000, guid: 9fcb5e136c4f7834e9d0e5cb73e8a3f5, type: 2}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _SURFACE_TYPE_TRANSPARENT
+  m_ValidKeywords: []
   m_InvalidKeywords:
-  - _ADD_PRECOMPUTED_VELOCITY
-  - _BLENDMODE_ALPHA
   - _NORMALMAP_TANGENT_SPACE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap:
-    RenderType: Transparent
+    RenderType: Opaque
   disabledShaderPasses:
   - DistortionVectors
+  - MOTIONVECTORS
   - TransparentDepthPrepass
   - TransparentDepthPostpass
   - TransparentBackface
-  - DepthOnly
-  - SHADOWCASTER
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 6428cc5531b295f4aa5874e61d0e9400, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 4.55, y: 0.62}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 6428cc5531b295f4aa5874e61d0e9400, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 4.55, y: 0.62}
     m_Ints: []
     m_Floats: []
-    m_Colors:
-    - _BaseColor: {r: 0, g: 0.6734693, b: 1, a: 0.54509807}
-    - _Color: {r: 0, g: 0.6734693, b: 1, a: 0.54509807}
+    m_Colors: []
   m_BuildTextureStacks: []
