@@ -3,7 +3,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public GameObject hudGameObject; // Assign the GameObject containing the HUD in the inspector
-
+    
     void Awake()
     {
         // Optionally check if the HUD GameObject is assigned

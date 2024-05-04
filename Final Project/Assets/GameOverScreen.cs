@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
+
 public class GameOverScreen : MonoBehaviour
 {
+    public GameObject player;
+    
     void Start() {
         // Make the cursor visible and unlock it when the game over screen is shown
+        player.GetComponent<Player>().enabled = false;
+        Time.timeScale = 0f;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
