@@ -9,6 +9,7 @@ TagManager:
   - door
   - Unreachable
   - Drawer
+  - Sanity
   layers:
   - Default
   - TransparentFX

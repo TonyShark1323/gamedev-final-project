@@ -27,6 +27,7 @@ public class Sanity : MonoBehaviour
 
     void Update()
     {
+        if (!sanityActive) return;
         // Decrease sanity over time
         currentSanity -= (sanityDecreaseRate / 60) * Time.deltaTime;
 
@@ -45,6 +46,12 @@ public class Sanity : MonoBehaviour
             // Player has lost all sanity; trigger death or failure state
             ShowGameOverScreen();
         }
+    }
+    
+    public void RestoreSanity(float amount)
+    {
+        currentSanity += amount;
+        currentSanity = Mathf.Min(currentSanity, maxSanity); // Ensure sanity does not exceed maximum
     }
 
     void ShowGameOverScreen()
