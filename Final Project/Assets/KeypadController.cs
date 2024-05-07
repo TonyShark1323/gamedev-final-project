@@ -132,7 +132,7 @@ public class KeypadController : MonoBehaviour
     private bool inReach;
     [SerializeField] TMP_Text displayText; // Assign this in the inspector with a UI Text to show the input
     private string currentInput = ""; // Stores the current input from the user
-    private string validCode = "1234"; // The correct code to trigger an action
+    public string validCode = "1234"; // The correct code to trigger an action
     private bool isValidCodeEntered = false; // Flag to check if valid code was entered
     public string doorId = "Door1";  // Identifier for which door this keypad controls
     public static event Action<string, bool> OnCodeEntered; // Pass the doorId along with the event

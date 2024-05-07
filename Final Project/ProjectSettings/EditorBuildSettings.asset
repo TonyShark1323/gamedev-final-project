@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Resources/Scenes/RoomMaze.unity
     guid: aca4a08119a77254c849aca351ac162a
+  - enabled: 1
+    path: Assets/Resources/Scenes/GameEnd.unity
+    guid: 875c510416ab6964b941c158763c5689
   m_configObjects: {}
