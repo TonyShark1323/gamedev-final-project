@@ -7,6 +7,8 @@ public class FlashlightController : MonoBehaviour
     public GameObject flashlight;
     private bool isFlashlightOn = false;
     public bool hasFlashlight = false; // Flag to check if the player has the flashlight
+    public AudioSource turnOn;
+    public AudioSource turnOff;
 
 
     public void PickupFlashlight()
@@ -29,6 +31,12 @@ public class FlashlightController : MonoBehaviour
                 isFlashlightOn = !isFlashlightOn;
                 flashlight.SetActive(isFlashlightOn);
                 // Optionally play sound or show UI feedback for toggling the flashlight
+                if (isFlashlightOn) {
+                    turnOff.Play();
+                }
+                else if (!isFlashlightOn) {
+                    turnOn.Play();
+                }
         }
     }
 }

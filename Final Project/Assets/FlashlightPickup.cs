@@ -6,6 +6,7 @@ public class FlashlightPickup : MonoBehaviour
 {
     public FlashlightController FlashlightController;
     private bool inReach;
+    public AudioSource pickupSound;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -35,7 +36,8 @@ public class FlashlightPickup : MonoBehaviour
                 FlashlightController.PickupFlashlight(); // Enable flashlight and show message
             }
             Destroy(gameObject); // Remove or disable the flashlight pickup object
-             UIManager.Instance.HideTexts();
+            pickupSound.Play();
+            UIManager.Instance.HideTexts();
         }
     }
 }

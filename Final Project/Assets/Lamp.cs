@@ -5,6 +5,7 @@ using UnityEngine;
 public class Lamp : MonoBehaviour
 {
     public GameObject lightsParent; // Reference to the parent GameObject of the lights
+    public AudioSource lightSound;
 
     private bool inReach;
     private bool on;
@@ -43,6 +44,8 @@ public class Lamp : MonoBehaviour
         if (inReach && Input.GetKeyDown(KeyCode.E))
         {
             on = !on; // Toggle the state
+            if (lightSound != null)
+                lightSound.Play();
 
             // Ensure the lightsParent reference is valid before trying to access it.
             if (lightsParent != null)

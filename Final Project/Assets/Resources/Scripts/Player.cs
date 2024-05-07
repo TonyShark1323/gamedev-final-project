@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Movement Parameters")]
     [SerializeField] Transform cameraTransform;
     [SerializeField] float mouseSensitivity = 3f;
     [SerializeField] float movementSpeed = 5f;
@@ -12,10 +13,16 @@ public class Player : MonoBehaviour
     [SerializeField] float normalHeight = 2f;
     [SerializeField] float crouchHeight = 1f;
 
+    [Header("Sound Effects")]
+    [SerializeField] AudioSource walkSound;
+    // [SerializeField] AudioClip sprintSound;
+    [SerializeField] float footstepInterval = 0.5f;
+
     private CharacterController controller;
     private Vector3 velocity;
     private Vector2 look;
     private bool isCrouching = false;
+    private float footstepTimer;
 
     void Awake() 
     {
@@ -26,6 +33,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        footstepTimer = footstepInterval;
     }
 
     // Update is called once per frame
@@ -34,6 +42,22 @@ public class Player : MonoBehaviour
         UpdateGravity();
         UpdateMovement();
         UpdateLook();
+        UpdateFootsteps();
+    }
+
+    void UpdateFootsteps()
+    {
+        if (!controller.isGrounded || controller.velocity.magnitude < 0.1f)
+        {
+            return;
+        }
+
+        footstepTimer -= Time.deltaTime;
+        if (footstepTimer <= 0)
+        {
+            walkSound.Play();
+            footstepTimer = footstepInterval;
+        }
     }
 
     void UpdateGravity() 

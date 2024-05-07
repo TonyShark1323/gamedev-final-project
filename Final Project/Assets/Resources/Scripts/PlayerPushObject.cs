@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerPushObject : MonoBehaviour
 {
-    [SerializeField]
-    private float forceMagnitude;
+    [SerializeField] private float forceMagnitude;
+    [SerializeField] public AudioSource push;
 
     private void Start()
     {
@@ -26,7 +26,8 @@ public class PlayerPushObject : MonoBehaviour
             forceDirection.Normalize();
             
             rigidBody.AddForceAtPosition(forceDirection * forceMagnitude, transform.position, ForceMode.Impulse);
-
+            // Debug.Log("Pushing object");
+            // push.Play();
             
         }
     }

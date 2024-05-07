@@ -4,6 +4,7 @@ public class KeyPickup : MonoBehaviour
 {
     public DoorControllerNoAnim specificDoorToUnlock; // Assign the specific DoorController in the Inspector
     private bool inReach;
+    public AudioSource keyPickup;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -37,6 +38,7 @@ public class KeyPickup : MonoBehaviour
             }
 
             Destroy(gameObject);
+            keyPickup.Play();
             UIManager.Instance.HideTexts();
         }
     }

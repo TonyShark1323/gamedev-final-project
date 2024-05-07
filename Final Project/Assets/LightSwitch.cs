@@ -6,6 +6,7 @@ public class LightSwitch : MonoBehaviour
     public GameObject onModel; // Reference to the GameObject representing the "on" state model
     public GameObject offModel; // Reference to the GameObject representing the "off" state model
     public List<GameObject> lightsParents; // Hold references to multiple light parent objects
+    public AudioSource switchSound;
 
 
     private bool inReach;
@@ -51,6 +52,8 @@ public class LightSwitch : MonoBehaviour
         if (inReach && Input.GetKeyDown(KeyCode.E))
         {
             on = !on; // Toggle the state
+            if (switchSound != null)
+                switchSound.Play();
 
             foreach (var lightsParent in lightsParents)
             {

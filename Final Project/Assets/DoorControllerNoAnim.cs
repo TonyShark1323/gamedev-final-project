@@ -7,6 +7,9 @@ public class DoorControllerNoAnim : MonoBehaviour
     public float openSpeed = 2f; // Speed at which the door opens
     public bool isLocked = true; // Initially, the door is locked
 
+    public AudioSource open;
+    public AudioSource jammed;
+
 
     private bool isOpen = false; // Track whether the door is open or closed
     private bool inReach = false; // Whether the player is in reach to interact with the door
@@ -32,18 +35,21 @@ public class DoorControllerNoAnim : MonoBehaviour
                 {
                     isLocked = false; // Unlock the door if the player has the key
                     isOpen = true; // And open the door
+                    open.Play();
                 }
                 else
                 {
                     // If the door is locked and the player doesn't have the key, show locked door text
                     UIManager.Instance.HideTexts();
                     UIManager.Instance.ShowDoorLockedText(true);
+                    // jammed.Play();
                     return; // Skip attempting to open the door this frame
                 }
             }
             else
             {
                 isOpen = !isOpen; // Toggle the door open state if it's not locked
+                open.Play();
             }
         }
 

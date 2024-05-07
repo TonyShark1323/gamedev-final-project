@@ -15,6 +15,9 @@ public class DrawerController : MonoBehaviour
     public float speed = 2f; // Speed at which the drawer opens
     public DrawerOrientation orientation = DrawerOrientation.ZAxis;
 
+    public AudioSource openSound;
+    public AudioSource closeSound;
+
     private bool isOpen = false; // Track whether the drawer is open or closed
     private bool inReach = false; // Whether the player is in reach to interact with the drawer
 
@@ -39,6 +42,14 @@ public class DrawerController : MonoBehaviour
         if (inReach && Input.GetKeyDown(KeyCode.E))
         {
             isOpen = !isOpen;
+            if(!isOpen){
+                if (openSound != null)
+                    openSound.Play();
+            }
+            else if (isOpen){
+                if (closeSound != null)
+                    closeSound.Play();
+            }
         }
 
         MoveDrawer();
