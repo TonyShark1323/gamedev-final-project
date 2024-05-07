@@ -9,6 +9,11 @@ public class DrawerController : MonoBehaviour
         ZAxis
     }
 
+    public float spawnChance = 0.3f; // 30% chance to spawn SanityMeds
+    public GameObject sanityMedsPrefab; // Assign this via the Inspector
+    public bool allowItemSpawn = true;
+
+
     public Transform drawer; // Assign the drawer GameObject
     private float closedPositionZ; // The position when the drawer is closed
     public float openOffsetZ = 0.5f; // Offset from the closed position to the open position
@@ -45,14 +50,17 @@ public class DrawerController : MonoBehaviour
             if(!isOpen){
                 if (openSound != null)
                     openSound.Play();
+            
             }
             else if (isOpen){
                 if (closeSound != null)
                     closeSound.Play();
+                    TrySpawnSanityMeds();
             }
         }
 
-        MoveDrawer();
+        // MoveDrawer();
+        InstantMoveDrawer(); // Use the new method to move the drawer instantly
         if (inReach)
         {
             UIManager.Instance.ShowDrawerText(!isOpen);
@@ -95,5 +103,41 @@ public class DrawerController : MonoBehaviour
         }
 
         drawer.localPosition = Vector3.Lerp(drawer.localPosition, targetPosition, Time.deltaTime * speed);
+    }
+
+    void InstantMoveDrawer() {
+        Vector3 targetPosition = drawer.localPosition;
+
+        switch (orientation)
+        {
+            case DrawerOrientation.XAxis:
+                targetPosition.x = isOpen ? closedPositionZ + openOffsetZ : closedPositionZ;
+                break;
+            case DrawerOrientation.YAxis:
+                targetPosition.y = isOpen ? closedPositionZ + openOffsetZ : closedPositionZ;
+                break;
+            case DrawerOrientation.ZAxis:
+                targetPosition.z = isOpen ? closedPositionZ + openOffsetZ : closedPositionZ;
+                break;
+        }
+
+        drawer.localPosition = targetPosition; // Set position directly without interpolation
+    }
+
+    void TrySpawnSanityMeds() {
+    // Only attempt to spawn if item spawning is allowed
+        if (allowItemSpawn && Random.value < spawnChance) // Random.value returns a value between 0.0 and 1.0
+        {
+            // Check if pooling is used, otherwise instantiate normally
+            if (ObjectPool.Instance != null)
+            {
+                GameObject sanityMeds = ObjectPool.Instance.Get();
+                sanityMeds.transform.position = drawer.position + new Vector3(0, 0, 0.1f);
+            }
+            else
+            {
+                Instantiate(sanityMedsPrefab, drawer.position + new Vector3(0, 0, 0.1f), Quaternion.identity);
+            }
+        }
     }
 }

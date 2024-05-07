@@ -3,7 +3,7 @@ using UnityEngine;
 public class SanityMeds : MonoBehaviour
 {
     private bool inReach;
-    public AudioSource useMeds;
+    private AudioSource medsSound;
     [SerializeField]
     private float minRestorePercentage = 10f; // Minimum percentage of max sanity to restore
     [SerializeField]
@@ -45,6 +45,11 @@ public class SanityMeds : MonoBehaviour
             {
                 Debug.LogError("Sanity component not found on the player!");
             }
+            medsSound = GetComponent<AudioSource>();
+        if (medsSound == null)
+        {
+            Debug.LogError("No AudioSource found on the SanityMeds prefab!");
+        }
         }
         else
         {
@@ -66,7 +71,14 @@ public class SanityMeds : MonoBehaviour
             // Calculate the amount to restore
             float restoreAmount = Random.Range(minRestorePercentage, maxRestorePercentage) / 100 * playerSanity.maxSanity;
             int roundedRestoreAmount = Mathf.RoundToInt(restoreAmount);
-            useMeds.Play();
+            if (medsSound != null)
+        {
+            Debug.Log("Meds Sounds not null, playing sound");
+            medsSound.Play();
+        }
+        else {
+            Debug.Log("Meds Sounds null");
+        }
 
             playerSanity.RestoreSanity(roundedRestoreAmount);
             UIManager.Instance.ShowMessage("Restored " + roundedRestoreAmount + "% sanity", 5f);

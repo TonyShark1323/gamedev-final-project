@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public GameObject lightOffText; // Add this for Off text
     public GameObject readNoteText;
     public GameObject pickupText;
+    public GameObject keypadText;
     public TextMeshProUGUI messageText; // Assign this via the Inspector
 
     private void Awake()
@@ -66,6 +67,7 @@ public class UIManager : MonoBehaviour
         closeDoorText.SetActive(false);
         lightOnText.SetActive(false);
         lightOffText.SetActive(false);
+        keypadText.SetActive(false);
     }
 
     // Method to show/hide the read note text
@@ -77,12 +79,20 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // Method to show/hide the read note text
+    // Method to show/hide the pickup text
     public void ShowPickupText(bool show)
     {
         if (pickupText != null)
         {
             pickupText.SetActive(show);
+        }
+    }
+
+    public void ShowKeypadText(bool show)
+    {
+        if (keypadText != null)
+        {
+            keypadText.SetActive(show);
         }
     }
 

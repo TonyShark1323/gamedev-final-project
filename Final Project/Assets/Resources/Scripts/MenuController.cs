@@ -4,10 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.Audio; // Include this to use the AudioMixer
 
 
 public class MenuController : MonoBehaviour
 {
+    [Header("Audio Mixer")]
+    public AudioMixer mainAudioMixer; // Assign this via the Inspector
+
     [Header("Volume Settings")]
     [SerializeField] private TMP_Text volumeTextValue = null;
     [SerializeField] private Slider volumeSlider = null;
@@ -37,8 +41,8 @@ public class MenuController : MonoBehaviour
     
     [Header("Levels To Load")]
     public string _newGameLevel;
-    private string levelToLoad;
-    [SerializeField] private GameObject noSavedGameDialog = null;
+    // private string levelToLoad;
+    // [SerializeField] private GameObject noSavedGameDialog = null;
 
     [Header("Resolution Dropdowns")]
     public TMP_Dropdown resolutionDropdown;
@@ -64,6 +68,14 @@ public class MenuController : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+
+        if(PlayerPrefs.HasKey("masterVolume")){
+            LoadVolume();
+        }
+        else {
+            SetVolume();
+        }
+        
     }
 
     public void SetResolution(int resolutionIndex) {
@@ -76,30 +88,39 @@ public class MenuController : MonoBehaviour
         SceneManager.LoadScene(_newGameLevel);
     }
 
-    public void LoadGameDialogYes(){
-        if(PlayerPrefs.HasKey("SavedLevel")){
-            Debug.Log("Save file found");
-            levelToLoad = PlayerPrefs.GetString("SavedLevel");
-            SceneManager.LoadScene(levelToLoad);
-        }
-        else {
-            Debug.Log("No Save File Found");
-            noSavedGameDialog.SetActive(true);
-        }
-    }
+    // public void LoadGameDialogYes(){
+    //     if(PlayerPrefs.HasKey("SavedLevel")){
+    //         Debug.Log("Save file found");
+    //         levelToLoad = PlayerPrefs.GetString("SavedLevel");
+    //         SceneManager.LoadScene(levelToLoad);
+    //     }
+    //     else {
+    //         Debug.Log("No Save File Found");
+    //         noSavedGameDialog.SetActive(true);
+    //     }
+    // }
 
     public void ExitButton(){
         Application.Quit();
     }
 
-    public void SetVolume(float volume){
-        AudioListener.volume = volume;
+    public void SetVolume(){
+        // AudioListener.volume = volume;
+        float volume = volumeSlider.value;
+        mainAudioMixer.SetFloat("MasterVolume", Mathf.Log10(volume)*20); // Convert linear volume to decibels
+        PlayerPrefs.SetFloat("masterVolume", volume);
         volumeTextValue.text = volume.ToString("0.0");
     }
 
-    public void VolumeApply(){
-        PlayerPrefs.SetFloat("masterVolume", AudioListener.volume);
-        StartCoroutine(ConfirmationBox());
+    // public void VolumeApply(){
+    //     float volume = volumeSlider.value;
+    //     mainAudioMixer.SetFloat("master", Mathf.Log10(AudioListener.volume) * 20);
+    //     StartCoroutine(ConfirmationBox());
+    // }
+
+    public void LoadVolume(){
+        volumeSlider.value=PlayerPrefs.GetFloat("masterVolume");
+        SetVolume();
     }
 
     public void SetControllerSen(float sensitivity){
@@ -145,7 +166,7 @@ public class MenuController : MonoBehaviour
             AudioListener.volume = defaultVolume;
             volumeSlider.value = defaultVolume;
             volumeTextValue.text = defaultVolume.ToString("0.0");
-            VolumeApply();
+            // VolumeApply();
         }
         if(MenuType == "Gameplay"){
             controllerSenTextValue.text = defaultSen.ToString("0");

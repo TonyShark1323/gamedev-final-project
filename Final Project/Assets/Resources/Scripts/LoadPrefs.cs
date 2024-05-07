@@ -30,16 +30,16 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void Awake(){
         if(canUse){
-            if(PlayerPrefs.HasKey("masterVolume")){
-                float localVolume = PlayerPrefs.GetFloat("masterVolume");
+            // if(PlayerPrefs.HasKey("masterVolume")){
+            //     float localVolume = PlayerPrefs.GetFloat("masterVolume");
 
-                volumeTextValue.text = localVolume.ToString("0.0");
-                volumeSlider.value = localVolume;
-                AudioListener.volume = localVolume;
-            }
-            else {
-                menuController.ResetButton("Audio");
-            }
+            //     volumeTextValue.text = localVolume.ToString("0.0");
+            //     volumeSlider.value = localVolume;
+            //     AudioListener.volume = localVolume;
+            // }
+            // else {
+            //     menuController.ResetButton("Audio");
+            // }
             if(PlayerPrefs.HasKey("masterFullscreen")){
                 int localFullscreen = PlayerPrefs.GetInt("masterFullscreen");
 
